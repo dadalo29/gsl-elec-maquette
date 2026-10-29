@@ -26,5 +26,5 @@ python3 -m http.server 8000 -d docs
 
 - Maquette : les formulaires n'envoient rien (message de confirmation simulé).
 - Le simulateur utilise la grille Senelec 2026 (hors redevances) et des hypothèses provisoires (130 kWh/kWc/mois, 60 % / 70 % de couverture solaire) à valider avec le client.
-- Les éléments entre crochets et en orange sont à fournir par le client (NINEA, RCCM, fondateur, conditions de paiement, chiffres batteries, photos, témoignages, hébergeur).
+- Les éléments entre crochets et en orange sont à fournir par le client (NINEA, RCCM, conditions de paiement, chiffres batteries, photos, témoignages, hébergeur).
 - Pages non indexées (`noindex`) tant que c'est une maquette.

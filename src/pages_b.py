@@ -164,16 +164,45 @@ def apropos():
 <h1 class="h1" style="max-width:960px">Rendre l’énergie solaire <span class="accent">accessible à tous</span> au Sénégal</h1>
 <p class="lead">GSL-ELEC — Gestion Solaire Locale et Électricité — aide les familles, les commerces et les entreprises à produire, stocker et économiser leur énergie.</p>
 </div></section>
-<section class="section"><div class="container row">
-<div class="col-s"><div class="placeholder" style="aspect-ratio:4/5;max-height:560px;border-radius:var(--rayon-xl);border:1px dashed #9FC9AE">{ico("user", 64, 1.3)}Photo du fondateur</div></div>
-<div class="col stack" style="flex-basis:520px">
-<span class="eyebrow">Notre histoire</span>
-<h2 class="h2">Une entreprise sénégalaise, un pont avec la diaspora</h2>
-<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">GSL-ELEC est née d’un constat simple : les factures d’électricité pèsent lourd sur les familles et les entreprises, et les coupures freinent l’activité. Le soleil, lui, est là toute l’année.</p>
-<p class="todo" style="font-size:16.5px;line-height:1.75">[Quelques lignes sur le parcours du fondateur, son expérience dans l’électricité et le solaire, et ce qui l’a poussé à créer GSL-ELEC.]</p>
-<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Joignable à la fois en France et au Sénégal, notre fondateur accompagne aussi la diaspora qui souhaite équiper la maison familiale à distance.</p>
-<div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;border-top:1px solid var(--bord);padding-top:16px"><strong class="todo" style="font-size:17px">[Nom du fondateur]</strong><span class="small muted">Fondateur de GSL-ELEC</span></div>
+<section class="section"><div class="container row" style="align-items:flex-start">
+<div class="col-s stack" style="gap:16px">
+<figure style="margin:0;border-radius:var(--rayon-xl);overflow:hidden;background:var(--vert-pale);box-shadow:var(--ombre)">
+<img src="assets/img/fondateur-bathie-sarr.jpg" alt="Bathie SARR, fondateur de GSL-ELEC, en uniforme d’officier sur le pont d’un bateau solaire" width="900" height="1048" loading="lazy" style="width:100%;height:auto">
+</figure>
+<div class="card" style="gap:12px">
+<div class="stack" style="gap:2px"><strong style="font-size:20px">Bathie SARR</strong><span class="small muted">Fondateur de GSL-ELEC</span></div>
+<ul class="check-list" style="gap:10px">
+<li>{ico("check", 22, 2.4)}<span><strong>Officier</strong> de la marine marchande</span></li>
+<li>{ico("check", 22, 2.4)}<span><strong>Ingénieur</strong> éco-gestion du navire</span></li>
+<li>{ico("check", 22, 2.4)}<span><strong>Ingénieur énergie</strong> à bord du Porrima (ex-PlanetSolar)</span></li>
+</ul>
 </div>
+</div>
+<div class="col stack" style="flex-basis:560px;gap:22px">
+<span class="eyebrow">Notre histoire</span>
+<h2 class="h2">Du solaire en mer au solaire chez vous</h2>
+<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">GSL-ELEC est née d’un constat simple : les factures d’électricité pèsent lourd sur les familles et les entreprises, et les coupures freinent l’activité. Le soleil, lui, est là toute l’année.</p>
+<div class="stack" style="gap:10px">
+<h3 class="h3">Une formation d’officier et d’ingénieur</h3>
+<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Notre fondateur est officier de la marine marchande et ingénieur en éco-gestion du navire. Cette formation d’ingénieur, proposée par l’École nationale supérieure maritime (ENSM), apprend à exploiter un navire de façon propre et économe : réduire la consommation d’énergie et de carburant, optimiser les installations électriques et la propulsion, intégrer des énergies renouvelables à bord et suivre les performances environnementales. Sur un navire, chaque kilowattheure compte, et il faut produire, stocker et distribuer l’énergie sans jamais tomber en panne.</p>
+</div>
+<div class="stack" style="gap:10px">
+<h3 class="h3">Ingénieur énergie sur un bateau 100&nbsp;% solaire</h3>
+<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Il a ensuite travaillé comme ingénieur en gestion d’énergie à bord du Porrima, anciennement PlanetSolar. Ce catamaran est le premier bateau à avoir fait le tour du monde uniquement à l’énergie solaire, entre 2010 et 2012, avec plus de 500 m² de panneaux et plusieurs tonnes de batteries lithium.</p>
+<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Son rôle : suivre la production des panneaux, gérer la charge et la décharge des batteries, répartir la puissance entre la propulsion et les équipements de bord, anticiper les besoins selon la météo et la route, et assurer la maintenance. En mer, le solaire n’est pas un complément : c’est la seule source d’énergie.</p>
+</div>
+<div class="stack" style="gap:10px">
+<h3 class="h3">Pourquoi GSL-ELEC</h3>
+<p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Si un navire peut traverser les océans grâce au soleil, une maison, un commerce ou un hôtel au Sénégal peuvent aussi réduire leur facture et gagner en autonomie. GSL-ELEC applique la même méthode : bien mesurer les besoins, choisir du matériel fiable et dimensionner chaque installation au plus juste.</p>
+</div>
+<div class="card bg-creme" style="border:0;flex-direction:row;gap:14px;align-items:flex-start"><span class="icon-box ib-orange" style="width:44px;height:44px;border-radius:12px">{ico("globe", 22)}</span><p style="color:#4A3F2A;font-size:15.5px">Joignable à la fois en France et au Sénégal, notre fondateur accompagne aussi la diaspora qui souhaite équiper la maison familiale à distance : échanges sur WhatsApp, visite et installation sur place, suivi de la production sur téléphone.</p></div>
+</div>
+</div></section>
+<section class="section bg-vert hero" style="padding:clamp(48px,6vw,88px) 0"><div class="deco-cercle" style="left:-160px;top:-200px;width:520px;height:520px;background:var(--vert-cercle)" aria-hidden="true"></div><div class="container-narrow" style="position:relative">
+<figure style="margin:0;display:flex;flex-direction:column;gap:20px;text-align:center;align-items:center">
+<blockquote style="margin:0;font-size:clamp(24px,3vw,38px);line-height:1.25;font-weight:800;letter-spacing:-0.015em;max-width:24ch">« Produire, stocker et économiser : l’énergie solaire, <span class="accent">pensée comme à bord.</span> »</blockquote>
+<figcaption style="color:var(--sur-vert);font-size:15px"><strong style="color:#fff">Bathie SARR</strong>, fondateur de GSL-ELEC</figcaption>
+</figure>
 </div></section>
 <section class="section bg-gris"><div class="container stack-l"><div class="stack"><span class="eyebrow">Nos valeurs</span><h2 class="h2">Ce qui guide notre travail</h2></div><div class="grid grid-4">{vh}</div></div></section>
 <section class="section"><div class="container row" style="align-items:flex-start">
@@ -317,7 +346,7 @@ def mentions():
 <div class="prose" style="flex:3 1 600px;font-size:16px;gap:36px">
 <div id="editeur" class="stack" style="gap:12px"><h2 style="margin:0">1. Éditeur du site</h2><dl>
 <dt>Raison sociale</dt><dd>GSL-ELEC — Gestion Solaire Locale et Électricité</dd><dt>Forme juridique</dt><dd>{T("[À compléter]")}</dd><dt>NINEA</dt><dd>{T("[À compléter]")}</dd><dt>RCCM</dt><dd>{T("[À compléter]")}</dd>
-<dt>Siège social</dt><dd>{T("[Adresse au Sénégal]")}</dd><dt>Directeur de la publication</dt><dd>{T("[Nom du fondateur]")}</dd><dt>Contact</dt><dd>{MAIL} · {TEL_TXT}</dd></dl></div>
+<dt>Siège social</dt><dd>{T("[Adresse au Sénégal]")}</dd><dt>Directeur de la publication</dt><dd>Bathie SARR</dd><dt>Contact</dt><dd>{MAIL} · {TEL_TXT}</dd></dl></div>
 <div id="hebergement" class="stack" style="gap:12px"><h2 style="margin:0">2. Hébergement</h2><p>Le site est hébergé par {T("[nom de l’hébergeur, adresse, téléphone]")}.</p></div>
 <div id="propriete" class="stack" style="gap:12px"><h2 style="margin:0">3. Propriété intellectuelle</h2><p>Le logo, les textes, les visuels et l’ensemble des contenus de ce site sont la propriété de GSL-ELEC ou utilisés avec autorisation. Toute reproduction sans accord écrit préalable est interdite.</p></div>
 <div id="confidentialite" class="stack" style="gap:12px"><h2 style="margin:0">4. Données personnelles</h2>
