@@ -1,6 +1,8 @@
 """Équipements, fiches, étapes, réalisations, financement, à propos, conseils, article, FAQ, contact, mentions."""
 from common import ico, ARROW, WA, TEL, TEL_TXT, WA_TXT_AFF, MAIL, cta_band, crumbs
 from data import EQUIP, TINT, FAQ_ALL, equip_card, faq_items, contact_form
+from produits import (bande, battery_cards, bess_cards, onduleur_tiles, forces, spec_table, chiffres, photo,
+                      ONDULEUR_FORCES, ONDULEUR_SPECS, BAT_FORCES, BAT_SPECS, SOURCE)
 
 
 def chips(group, cats, word):
@@ -17,17 +19,39 @@ def hero_pale(label, h1, lead, extra=""):
 
 
 def equipements():
-    cats = [("tous", "Tous"), ("maison", "Maison"), ("commerce", "Commerce"), ("pro", "Industrie & hôtel"), ("agri", "Agriculture")]
-    cards = "".join(equip_card(e) for e in EQUIP)
+    autres = [e for e in EQUIP if e["key"] not in ("onduleurs-hybrides", "batteries-lithium", "batteries-haute-tension")]
+    nav = "".join(f'<a class="chip" style="display:inline-flex;align-items:center" href="#{a}">{l}</a>' for a, l in [("onduleurs", "Onduleurs hybrides"), ("batteries", "Batteries lithium"), ("stockage-pro", "Stockage pro"), ("autres", "Autres équipements")])
     return hero_pale("Nos équipements", 'Du matériel de qualité, <span class="accent-vert">expliqué simplement</span>',
-                     "Découvrez les équipements que nous installons, à quoi ils servent et pour qui ils sont faits. Chaque fiche technique est disponible au téléchargement.") + f'''
-<section class="section-tight"><div class="container stack-l">
-<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px">{chips("equip-grid", cats, "équipement")}<span class="small muted" data-count-for="equip-grid" data-word="équipement" aria-live="polite">{len(EQUIP)} équipements</span></div>
-<div class="grid grid-fill" id="equip-grid">{cards}</div>
-<a class="card bg-nuit" href="batteries-haute-tension.html" style="border:0;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;color:#fff;padding:clamp(22px,3vw,40px)">
-<div class="stack" style="gap:6px;flex:1 1 420px"><span class="eyebrow">Hôtels et industries</span><strong style="font-size:clamp(21px,2vw,28px);line-height:1.25">Tout savoir sur les batteries haute tension</strong></div>
-<span class="btn btn-orange btn-s">Découvrir la page dédiée</span></a>
-<p class="small muted">Les marques et modèles exacts vous sont communiqués dans votre devis. Tous nos équipements sont livrés avec leur fiche technique et leurs conditions de garantie.</p>
+                     "Onduleurs hybrides, batteries lithium, armoires de stockage : le matériel du fabricant GSL ENERGY que nous installons, avec ses caractéristiques. Fiche technique de chaque modèle sur demande.",
+                     f'<div class="chips">{nav}</div>') + f'''
+<section class="section-tight" id="onduleurs"><div class="container stack-l">
+{bande("bande-onduleurs.jpg", "Onduleurs solaires hybrides GSL ENERGY installés par GSL-ELEC", 1600, 383)}
+<div class="row" style="align-items:center">
+<div class="col-s"><div class="card" style="padding:0;overflow:hidden">{photo("p-onduleur-hybride.jpg", "Onduleurs hybrides GSL ENERGY", 300)}</div></div>
+<div class="col stack" style="flex-basis:520px"><span class="eyebrow">Onduleurs hybrides</span><h2 class="h2">De 8 à 24 kW, choisis après l’étude de charge</h2>
+<p style="color:var(--texte)">Le cœur de l’installation : solaire en priorité, charge des batteries, bascule en 10 ms en cas de coupure et démarrage automatique du groupe électrogène.</p>
+<a class="link-arrow" href="fiche-onduleurs-hybrides.html">Voir la fiche technique complète{ico("arrow", 16, 2.2)}</a></div>
+</div>
+{onduleur_tiles()}
+<p class="tiny muted">Usages donnés à titre indicatif. Mise en parallèle possible pour les plus grandes installations. Version 230 V / 50 Hz (monophasé) ou 400 V (triphasé).</p>
+</div></section>
+
+<section class="section bg-gris" id="batteries"><div class="container stack-l">
+<div class="section-head"><div><span class="eyebrow">Batteries lithium</span><h2 class="h2">Batteries pour maisons et commerces</h2></div><a class="link-arrow" href="fiche-batteries-lithium.html">Fiche technique{ico("arrow", 16, 2.2)}</a></div>
+{bande("bande-batteries.jpg", "Gamme de batteries lithium GSL ENERGY", 1600, 476)}
+{chiffres()}
+{battery_cards()}
+</div></section>
+
+<section class="section" id="stockage-pro"><div class="container stack-l">
+<div class="section-head"><div><span class="eyebrow">Stockage professionnel</span><h2 class="h2">Armoires haute tension pour hôtels et industries</h2></div><a class="link-arrow" href="batteries-haute-tension.html">La page dédiée{ico("arrow", 16, 2.2)}</a></div>
+{bess_cards()}
+</div></section>
+
+<section class="section bg-gris" id="autres"><div class="container stack-l">
+<div class="stack"><span class="eyebrow">Autres équipements</span><h2 class="h2">Tout le reste de l’installation</h2></div>
+<div class="grid grid-fill">{"".join(equip_card(e) for e in autres)}</div>
+{SOURCE}
 </div></section>
 {cta_band()}'''
 
@@ -37,13 +61,41 @@ def fiche(e):
     uses = "".join(f'<span class="tag">{u}</span>' for u in e["uses"])
     pros = "".join(f'<li>{ico("check", 22, 2.4)}{p}</li>' for p in e["pros"])
     others = "".join(f'<a class="chip" style="display:inline-flex;align-items:center" href="{o["href"]}">{o["title"]}</a>' for o in EQUIP if o["key"] != e["key"])
+    if e.get("img"):
+        visual = f'<div style="border-radius:var(--rayon-xl);border:1px solid var(--bord);background:#fff;padding:24px;display:flex;align-items:center;justify-content:center;max-height:520px"><img src="assets/img/{e["img"]}" alt="{e["title"]}" style="max-height:470px;max-width:100%;object-fit:contain"></div>'
+    else:
+        visual = f'<div style="aspect-ratio:1/1;max-height:520px;border-radius:var(--rayon-xl);background:{bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative">{ico(e["icon"], 160, 0.9)}<span style="position:absolute;bottom:18px;left:18px;right:18px;text-align:center;background:rgba(255,255,255,.92);color:var(--texte);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600">Photo produit fournie par GSL-ELEC</span></div>'
+    pdf = {"onduleurs-hybrides": "GSL-ELEC_Onduleurs_hybrides_8-24kW.pdf", "batteries-lithium": "GSL-ELEC_Batteries_lithium.pdf", "batteries-haute-tension": "GSL-ELEC_Batteries_lithium.pdf"}.get(e["key"])
+    garantie = {"batteries-lithium": "10 ans (selon modèle)", "batteries-haute-tension": "10 ans (selon modèle)"}.get(e["key"])
+    extra = ""
+    if e["key"] == "onduleurs-hybrides":
+        extra = f'''<section class="section-tight"><div class="container stack-l">
+{bande("bande-onduleurs.jpg", "Onduleurs solaires hybrides GSL ENERGY", 1600, 383)}
+<div class="stack"><span class="eyebrow">Choisissez votre puissance</span><h2 class="h2">De 8 à 24 kW</h2></div>{onduleur_tiles()}
+<div class="stack"><span class="eyebrow">Points forts</span><h2 class="h2">Ce que fait l’onduleur</h2></div>{forces(ONDULEUR_FORCES)}
+<div class="stack"><span class="eyebrow">Caractéristiques</span><h2 class="h2">Exemple : modèle 12 kW</h2></div>
+{spec_table(ONDULEUR_SPECS, "Pour le Sénégal : version 230 V / 50 Hz (monophasé) ou 400 V (triphasé). Fiche de chaque puissance sur demande.")}
+{SOURCE}</div></section>'''
+    elif e["key"] == "batteries-lithium":
+        extra = f'''<section class="section-tight"><div class="container stack-l">
+{chiffres()}
+<div class="stack"><span class="eyebrow">Pourquoi nos batteries</span><h2 class="h2">Sûres, connectées, adaptées au climat</h2></div>{forces(BAT_FORCES)}
+<div class="stack"><span class="eyebrow">La gamme</span><h2 class="h2">De 5 à 61 kWh</h2></div>
+{bande("bande-batteries.jpg", "Gamme de batteries lithium GSL ENERGY", 1600, 476)}
+{battery_cards("contact.html")}
+<div class="stack"><span class="eyebrow">Fiche produit</span><h2 class="h2">Batterie murale 5,12 kWh · 51,2 V 100 Ah</h2></div>
+<div class="row" style="align-items:flex-start"><div class="col-s"><div class="card" style="padding:0;overflow:hidden">{photo("p-bat-murale-512.jpg", "Batterie murale 5,12 kWh GSL ENERGY", 380)}</div></div>
+<div class="col" style="flex-basis:520px">{spec_table(BAT_SPECS, "Fiche fabricant GSL ENERGY.")}</div></div>
+{SOURCE}</div></section>'''
+    elif e["key"] == "batteries-haute-tension":
+        extra = f'''<section class="section-tight"><div class="container stack-l">
+<div class="stack"><span class="eyebrow">Stockage professionnel</span><h2 class="h2">Armoires haute tension</h2></div>{bess_cards()}{SOURCE}</div></section>'''
     hv = '<a class="link-arrow" href="batteries-haute-tension.html">Voir la page complète sur les batteries haute tension' + ico("arrow", 16, 2.2) + '</a>' if e["key"] == "batteries-haute-tension" else ""
     return f'''
 <section class="section-tight"><div class="container stack-l">
 {crumbs(("Nos équipements", "equipements.html"), (e["title"], None))}
 <div class="row" style="align-items:flex-start">
-<div class="col" style="flex-basis:440px"><div style="aspect-ratio:1/1;max-height:520px;border-radius:var(--rayon-xl);background:{bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative">{ico(e["icon"], 160, 0.9)}
-<span style="position:absolute;bottom:18px;left:18px;right:18px;text-align:center;background:rgba(255,255,255,.92);color:var(--texte);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600">Photo produit fournie par GSL-ELEC</span></div></div>
+<div class="col" style="flex-basis:440px">{visual}</div>
 <div class="col stack" style="flex-basis:460px;gap:20px">
 <span class="badge badge-vert">Pour : {e["who"]}</span>
 <h1 class="h1" style="font-size:clamp(30px,3.8vw,50px)">{e["title"]}</h1>
@@ -52,13 +104,14 @@ def fiche(e):
 <ul class="check-list">{pros}</ul>
 <dl class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin:0">
 <div class="card card-soft" style="padding:14px 16px;gap:4px"><dt class="small muted">Gammes disponibles</dt><dd style="margin:0;font-weight:600">{e["range"]}</dd></div>
-<div class="card card-soft" style="padding:14px 16px;gap:4px"><dt class="small muted">Garantie</dt><dd class="todo" style="margin:0">Selon fiche fabricant</dd></div>
+<div class="card card-soft" style="padding:14px 16px;gap:4px"><dt class="small muted">Garantie</dt>{f'<dd style="margin:0;font-weight:600">{garantie}</dd>' if garantie else '<dd class="todo" style="margin:0">Selon fiche fabricant</dd>'}</div>
 </dl>
-<div class="btns"><a class="btn btn-vert" href="contact.html">Demander un devis{ARROW}</a><a class="btn btn-contour-vert" href="#" aria-disabled="true">{ico("download", 18, 2)}Fiche technique (PDF)</a></div>
+<div class="btns"><a class="btn btn-vert" href="contact.html">Demander un devis{ARROW}</a>{f'<a class="btn btn-contour-vert" href="assets/docs/{pdf}" target="_blank" rel="noopener">{ico("download", 18, 2)}Fiche technique (PDF)</a>' if pdf else '<span class="btn btn-contour-vert" style="opacity:.6;cursor:default">Fiche technique sur demande</span>'}</div>
 {hv}
 </div>
 </div>
 </div></section>
+{extra}
 <section class="section-tight bg-gris"><div class="container stack">
 <h2 style="font-size:clamp(24px,2.4vw,32px);font-weight:800">Les autres équipements</h2>
 <div class="chips">{others}</div>

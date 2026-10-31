@@ -1,6 +1,7 @@
 """Accueil, solutions, pages service, batteries haute tension."""
 from common import ico, ARROW, WA, TEL, TEL_TXT, WA_TXT_AFF, SERVICES, cta_band, crumbs
 from data import EQUIP, FAQ_HOME, SERVICE_DATA, equip_card, faq_items, contact_form
+from produits import bande, bess_cards, spec_table
 
 CK = ico("check", 18, 2.4)
 
@@ -101,7 +102,7 @@ def index():
 </div>
 <div class="col" style="flex-basis:440px">
 <div class="hero-photo">
-<div class="frame"><img src="assets/img/hero-famille.jpg" alt="Une famille sourit en comparant sa facture d’électricité avant et après le solaire" width="1230" height="880" fetchpriority="high"></div>
+<div class="frame"><img src="assets/img/hero-famille-maison.jpg" alt="Une famille sourit en comparant sa facture d’électricité, devant une maison équipée de panneaux solaires" width="1200" height="860" fetchpriority="high"></div>
 <div class="bill-card"><span class="label">Exemple de facture mensuelle</span><span class="vals"><s>45 000</s>{ico("arrow", 18, 2.4, extra=' style="color:var(--vert-cta)"')}<strong>15 000 <small>FCFA</small></strong></span><span class="tiny" style="color:#5B6B62">Exemple indicatif — selon chaque installation</span></div>
 <div class="pill-float">{ico("bolt", 18, 2.2)}Jusqu’à 200 kWc</div>
 </div>
@@ -114,7 +115,9 @@ def index():
 <section class="section" id="solutions"><div class="container stack-l">
 <div class="section-head"><div><span class="eyebrow">Nos solutions</span><h2 class="h2">Une solution solaire pour chaque besoin</h2></div>
 <p class="muted" style="max-width:440px;font-size:17px">De la villa familiale à l’usine, chaque projet commence par une étude de votre consommation réelle.</p></div>
+{bande("bande-stockage.jpg", "Gamme de solutions de stockage d’énergie GSL-ELEC : batteries et armoires pour maisons, commerces, hôtels et industries", 1600, 577)}
 <div class="grid grid-3">{solution_cards(compact=True)}</div>
+{bande("bande-onduleurs.jpg", "Onduleurs solaires hybrides GSL ENERGY installés par GSL-ELEC", 1600, 383)}
 </div></section>
 
 <section class="section bg-pale" id="simulateur"><div class="container"><div class="row">
@@ -226,7 +229,9 @@ def solutions():
 <p class="lead">Maison, commerce, hôtel, industrie ou exploitation agricole : chaque projet commence par une étude de votre consommation réelle, pour installer la bonne puissance au bon prix.</p>
 <div class="chips"><span class="chip" style="cursor:default"><span class="accent-vert">5 à 50 kWc</span>&nbsp;· maisons et commerces</span><span class="chip" style="cursor:default"><span class="accent-orange">Jusqu’à 200 kWc</span>&nbsp;· industries et hôtels</span><span class="chip" style="cursor:default">Partout au Sénégal</span></div>
 </div></section>
-<section class="section"><div class="container grid grid-3">{solution_cards()}</div></section>
+<section class="section-tight" style="padding-bottom:0"><div class="container">{bande("bande-stockage.jpg", "Gamme de solutions de stockage d’énergie GSL-ELEC : batteries et armoires pour maisons, commerces, hôtels et industries", 1600, 577)}</div></section>
+<section class="section"><div class="container stack-l"><div class="grid grid-3">{solution_cards()}</div>
+{bande("bande-onduleurs.jpg", "Onduleurs solaires hybrides GSL ENERGY installés par GSL-ELEC", 1600, 383)}</div></section>
 <section class="section bg-gris"><div class="container stack-l">
 <div class="stack" style="max-width:720px"><span class="eyebrow">Comment choisir ?</span><h2 class="h2">Quelle installation correspond à votre situation ?</h2></div>
 <div class="grid grid-3">
@@ -301,8 +306,7 @@ def batteries():
              ("square", "ib-pale", "Compact et durable", "Armoires peu encombrantes, longue durée de vie, très peu d’entretien.")]
     fh = "".join(f'<div class="card"><span class="icon-box {c}" style="width:48px;height:48px">{ico(i, 24)}</span><strong style="font-size:17px">{t}</strong><p>{x}</p></div>' for i, c, t, x in feats)
     apps = "".join(f'<span class="card" style="padding:16px;font-weight:600;font-size:15px">{a}</span>' for a in ["Grands hôtels et résidences", "Industries et ateliers", "Cliniques", "Supermarchés", "Chambres froides", "Sites agro-industriels"])
-    rows = [("Puissance solaire", "Jusqu’à 200 kWc", False), ("Chimie", "Lithium fer phosphate (LiFePO4)", False), ("Tension du système", "[À compléter]", True), ("Capacité par module", "[À compléter]", True), ("Nombre de cycles", "[À compléter]", True), ("Garantie", "[À compléter]", True)]
-    th = "".join(f'<tr><th scope="row">{a}</th><td{" class=\"todo\"" if t else ""} style="color:{"var(--orange-texte)" if t else "var(--texte)"}">{b}</td></tr>' for a, b, t in rows)
+    th = ""
     reas = "".join(f'<div style="display:flex;gap:12px;align-items:center;font-weight:600;font-size:15px">{ico("check", 22, 2.4, extra=" style=\"color:var(--vert-cta);flex:0 0 22px\"")}{t}</div>' for t in ["Étude de charge préalable", "Matériel documenté et garanti", "Mise en service par GSL-ELEC", "Contrat de maintenance"])
     return f'''
 <section class="page-hero hero bg-nuit" style="padding-bottom:clamp(48px,6vw,96px)">
@@ -314,8 +318,8 @@ def batteries():
 <p class="lead">Nos batteries lithium haute tension, associées à un onduleur hybride triphasé, stockent de grandes quantités d’énergie solaire et alimentent vos équipements sans interruption.</p>
 <div class="btns"><a class="btn btn-orange" href="#etude">Demander une étude pro{ARROW}</a><a class="btn btn-contour" href="https://wa.me/33768026171?text=Bonjour%2C%20je%20souhaite%20une%20%C3%A9tude%20batteries%20haute%20tension">{ico("wa", 20, 1.9)}WhatsApp</a></div>
 <div class="grid grid-4" style="margin-top:12px;gap:12px">
-<div class="stat"><strong>200 kWc</strong><span>puissance solaire maximale</span></div><div class="stat"><strong>Sur mesure</strong><span>stockage dimensionné après étude</span></div>
-<div class="stat"><strong>LiFePO4</strong><span>chimie lithium fer phosphate</span></div><div class="stat"><strong>À distance</strong><span>supervision et dépannage</span></div>
+<div class="stat"><strong>200 kWc</strong><span>puissance solaire maximale</span></div><div class="stat"><strong>64 à 209 kWh</strong><span>par armoire de stockage</span></div>
+<div class="stat"><strong>≥ 10 000</strong><span>cycles de charge (BESS 80 kVA)</span></div><div class="stat"><strong>10 ans</strong><span>de garantie (selon modèle)</span></div>
 </div>
 </div></section>
 
@@ -326,14 +330,7 @@ def batteries():
 <p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Une batterie haute tension réunit plusieurs modules lithium (LiFePO4) empilés et reliés en série pour fonctionner à plusieurs centaines de volts. Elle est associée à un onduleur hybride triphasé haute tension, qui gère les panneaux, les batteries, le réseau et le groupe électrogène.</p>
 <p style="font-size:16.5px;line-height:1.75;color:var(--texte)">Résultat : un grand stockage d’énergie, compact, efficace et pilotable à distance — idéal pour les gros consommateurs.</p>
 </div>
-<div class="col-s" style="display:flex;justify-content:center"><figure class="card card-soft" style="margin:0;max-width:380px;width:100%;align-items:center;padding:28px" aria-label="Illustration d’une armoire de batteries haute tension">
-<div style="width:220px;background:var(--vert-fonce);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 24px 40px -24px rgba(11,46,26,.7)">
-<div style="background:var(--vert-nuit);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;color:var(--orange-clair);font-size:12px;font-weight:700"><span>BMS</span><span style="display:flex;gap:4px"><i style="width:8px;height:8px;border-radius:50%;background:var(--vert)"></i><i style="width:8px;height:8px;border-radius:50%;background:var(--vert)"></i><i style="width:8px;height:8px;border-radius:50%;background:var(--orange)"></i></span></div>
-<div style="background:var(--vert);border-radius:8px;height:30px"></div><div style="background:var(--vert);border-radius:8px;height:30px"></div><div style="background:var(--vert);border-radius:8px;height:30px"></div><div style="background:var(--vert);border-radius:8px;height:30px"></div>
-<div style="border:2px dashed rgba(255,255,255,.5);border-radius:8px;height:30px;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">+ module</div>
-</div>
-<figcaption class="small muted" style="text-align:center">Armoire compacte : ajoutez des modules quand votre activité grandit.</figcaption>
-</figure></div>
+<div class="col-s"><figure class="card" style="margin:0;padding:20px;align-items:center;gap:10px"><img src="assets/img/p-bess-80kva.jpg" alt="Armoire de stockage haute tension GSL-BESS 80 kVA, portes ouvertes sur les modules de batteries" width="619" height="582" loading="lazy" style="width:100%;height:auto;max-width:440px"><figcaption class="small muted" style="text-align:center">GSL-BESS 80 kVA : onduleur, batteries et protections dans une seule armoire.</figcaption></figure></div>
 </div></section>
 
 <section class="section bg-pale"><div class="container stack-l">
@@ -346,11 +343,15 @@ def batteries():
 <div class="grid grid-3">{fh}</div>
 </div></section>
 
+<section class="section" style="padding-top:0"><div class="container stack-l">
+<div class="stack" style="max-width:720px"><span class="eyebrow">Nos armoires de stockage</span><h2 class="h2">Deux gammes pour les gros consommateurs</h2></div>
+{bess_cards()}
+</div></section>
 <section class="section bg-gris"><div class="container row" style="align-items:flex-start">
 <div class="col stack"><span class="eyebrow">Applications</span><h2 style="font-size:clamp(26px,2.8vw,36px);font-weight:800">Pour qui ?</h2><div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">{apps}</div></div>
 <div class="col stack"><span class="eyebrow">Caractéristiques</span><h2 style="font-size:clamp(26px,2.8vw,36px);font-weight:800">Les chiffres clés</h2>
-<table class="table"><caption>Valeurs issues des fiches fabricants, fournies par GSL-ELEC.</caption><tbody>{th}</tbody></table>
-<a class="link-arrow" href="fiche-batteries-haute-tension.html">{ico("download", 18, 2)}Télécharger la fiche technique (PDF)</a></div>
+{spec_table([("Puissance solaire", "Jusqu’à 200 kWc"), ("Chimie", "Lithium fer phosphate (LiFePO4)"), ("Capacité des armoires", "64 à 209 kWh"), ("Tension", "Triphasé 380/400 V"), ("Durée de vie", "≥ 8 000 à ≥ 10 000 cycles"), ("Garantie", "10 ans (selon modèle)"), ("Certifications", "CE, IEC 62619, VDE, UN38.3")], "Fiches fabricant GSL ENERGY.")}
+<a class="link-arrow" href="assets/docs/GSL-ELEC_Batteries_lithium.pdf" target="_blank" rel="noopener">{ico("download", 18, 2)}Télécharger la fiche technique (PDF)</a></div>
 </div></section>
 
 <section class="section-tight"><div class="container grid grid-4" style="gap:14px">{reas}</div></section>

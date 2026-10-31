@@ -9,7 +9,7 @@ EQUIP = [
          desc="Monocristallins haut rendement : ils transforment la lumière du soleil en électricité. Résistants à la chaleur et à la poussière.",
          long="Des panneaux monocristallins haut rendement qui transforment la lumière du soleil en électricité. Conçus pour résister à la chaleur et à la poussière, ils offrent une longue durée de vie.",
          uses=["Toitures", "Au sol", "Ombrières de parking"], pros=["Haut rendement, même par forte chaleur", "Résistants à la poussière et aux intempéries", "Longue durée de production"], range="Plusieurs puissances par panneau"),
-    dict(key="onduleurs-hybrides", icon="inverter", t="g", title="Onduleurs hybrides", who="maisons, commerces, entreprises", tags="maison commerce pro",
+    dict(key="onduleurs-hybrides", icon="inverter", t="g", img="p-onduleur-hybride.jpg", title="Onduleurs hybrides 8 à 24 kW", who="maisons, commerces, entreprises", tags="maison commerce pro",
          desc="Le cerveau de l’installation : solaire d’abord, charge des batteries, bascule automatique sur le réseau ou le groupe.",
          long="Le « cerveau » de l’installation : il utilise d’abord l’énergie solaire, charge les batteries et bascule automatiquement sur le réseau ou le groupe électrogène en cas de besoin.",
          uses=["Maison avec batteries", "Commerce", "Entreprise"], pros=["Priorité au solaire, économies maximales", "Bascule automatique sans coupure ressentie", "Suivi depuis le téléphone"], range="Monophasés et triphasés"),
@@ -17,12 +17,12 @@ EQUIP = [
          desc="Ils injectent la production solaire directement dans votre installation, sans batterie. La solution la plus économique en journée.",
          long="Ils injectent la production solaire directement dans votre installation pour consommer moins sur le réseau, sans batterie. C’est la solution la plus économique pour réduire la facture en journée.",
          uses=["Bureaux", "Commerces ouverts le jour", "Ateliers"], pros=["Investissement réduit, sans batterie", "Économies immédiates en journée", "Installation simple"], range="Monophasés et triphasés"),
-    dict(key="batteries-lithium", icon="battery", t="g", title="Batteries lithium 48 V", who="maisons, boutiques, petits commerces", tags="maison commerce",
-         desc="LiFePO4 : stockent l’énergie du jour pour la nuit et les coupures. Longue durée de vie, sans entretien, extensibles.",
+    dict(key="batteries-lithium", icon="battery", t="g", img="p-bat-murale-512.jpg", title="Batteries lithium", who="maisons, boutiques, petits commerces", tags="maison commerce",
+         desc="LiFePO4, de 5 à 61 kWh : au sol, murales ou empilables, pour la nuit et les coupures. Garantie jusqu’à 10 ans.",
          long="Des batteries LiFePO4 qui stockent l’énergie du jour pour la nuit et les coupures. Longue durée de vie, sans entretien et extensibles.",
          uses=["Nuit", "Coupures", "Petits commerces"], pros=["Sans entretien courant", "Extensibles en ajoutant des modules", "Gestion électronique intégrée (BMS)"], range="Plusieurs capacités, extensibles"),
-    dict(key="batteries-haute-tension", icon="battery", t="d", title="Batteries haute tension", who="industries et grands hôtels", tags="pro", star=True,
-         desc="Stockage de grande capacité pour les gros consommateurs, associé à un onduleur hybride triphasé.",
+    dict(key="batteries-haute-tension", icon="battery", t="d", img="p-bess-80kva.jpg", title="Stockage haute tension (BESS)", who="industries et grands hôtels", tags="pro", star=True,
+         desc="Armoires de 64 à 209 kWh, onduleur, BMS et extinction incendie intégrés, pour hôtels et industries.",
          long="Des modules lithium LiFePO4 empilés et reliés en série pour fonctionner à plusieurs centaines de volts, associés à un onduleur hybride triphasé haute tension. Le stockage de grande capacité des gros consommateurs.",
          uses=["Hôtels", "Industries", "Chambres froides"], pros=["Grande capacité, extensible", "Meilleur rendement, moins de pertes", "Supervision et protection de chaque cellule"], range="Dimensionné sur mesure après étude"),
     dict(key="pompes-solaires", icon="drop", t="g", title="Pompes solaires", who="agriculteurs, éleveurs, forages", tags="agri",
@@ -53,9 +53,9 @@ for e in EQUIP:
 def equip_card(e, small=False):
     bg, ink = TINT[e["t"]]
     star = '<span class="badge" style="position:absolute;top:12px;left:12px;background:var(--encre);color:var(--orange-clair)">Offre phare</span>' if e.get("star") else ""
-    h = 120 if small else 150
+    h = (150 if small else 180) if e.get("img") else (120 if small else 150)
     return f'''<a class="card card-media" href="{e["href"]}" data-tags="{e["tags"]}">
-<div style="height:{h}px;background:{bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative">{ico(e["icon"], 56 if small else 64, 1.3)}{star}</div>
+<div style="height:{h}px;background:{"#fff" if e.get("img") else bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative;{"border-bottom:1px solid var(--bord);padding:10px" if e.get("img") else ""}">{f'<img src="assets/img/{e["img"]}" alt="" loading="lazy" style="max-height:100%;max-width:100%;object-fit:contain">' if e.get("img") else ico(e["icon"], 56 if small else 64, 1.3)}{star}</div>
 <div class="card-body"><h3 style="font-size:17px;font-weight:700;letter-spacing:0">{e["title"]}</h3><p style="font-size:14px">{e["desc"]}</p>
 <span class="small muted"><strong style="color:var(--encre)">Pour :</strong> {e["who"]}</span>
 <span class="more" style="font-size:14.5px">Voir la fiche{ico("arrow", 15, 2.2)}</span></div></a>'''
