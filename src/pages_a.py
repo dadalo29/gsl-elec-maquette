@@ -1,7 +1,7 @@
 """Accueil, solutions, pages service, batteries haute tension."""
 from common import ico, ARROW, WA, TEL, TEL_TXT, WA_TXT_AFF, SERVICES, cta_band, crumbs
 from data import EQUIP, FAQ_HOME, SERVICE_DATA, equip_card, faq_items, contact_form
-from produits import bande, bess_cards, spec_table
+from produits import bande, bess_cards, spec_table, PHOTOS, img_src, CREDIT
 
 CK = ico("check", 18, 2.4)
 
@@ -83,11 +83,11 @@ def index():
              ("Mise en service", "Tests, réglages et explications pour bien utiliser votre système."),
              ("Suivi et SAV", "Supervision, entretien et dépannage tout au long de la vie de l’installation.")]
     sl = "".join(f'<li class="{"last" if i == 5 else ""}"><span class="num{" o" if i == 5 else ""}">{i + 1}</span><strong>{t}</strong><span class="d">{d}</span></li>' for i, (t, d) in enumerate(steps))
-    reals = [("Maison", "Villa familiale — [Ville]", "[Puissance] kWc · onduleur hybride · batteries lithium", False),
-             ("Hôtel", "Hôtel — [Ville]", "[Puissance] kWc · batteries haute tension", True),
-             ("Agriculture", "Pompage solaire — [Ville]", "Forage · pompe immergée · [Puissance] kWc", False)]
-    rl = "".join(f'''<a class="card card-media" href="realisations.html"><div class="placeholder ratio-43{" orange" if o else ""}">{ico("image", 40, 1.5)}Photo du chantier</div>
-<div class="card-body"><span class="badge {"badge-orange" if o else "badge-vert"}">{c}</span><strong style="font-size:17px">{t}</strong><span class="small muted">{d}</span></div></a>''' for c, t, d, o in reals)
+    reals = [("Maison", "Villa familiale — [Ville]", "[Puissance] kWc · onduleur hybride · batteries lithium", False, PHOTOS["villa"]),
+             ("Hôtel", "Hôtel — [Ville]", "[Puissance] kWc · batteries haute tension", True, PHOTOS["hotel"]),
+             ("Agriculture", "Pompage solaire — [Ville]", "Forage · pompe immergée · [Puissance] kWc", False, PHOTOS["pompage"])]
+    rl = "".join(f'''<a class="card card-media" href="realisations.html"><div class="ratio-43" style="position:relative;overflow:hidden;background:var(--vert-pale)"><img src="{img_src(im, 800)}" alt="{t} : photo d’illustration" loading="lazy" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;left:10px;bottom:10px;background:rgba(11,46,26,.78);color:#fff;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:999px">Photo d’illustration</span></div>
+<div class="card-body"><span class="badge {"badge-orange" if o else "badge-vert"}">{c}</span><strong style="font-size:17px">{t}</strong><span class="small muted">{d}</span></div></a>''' for c, t, d, o, im in reals)
     return f'''
 <section class="hero hero-home">
 <div class="deco-cercle" style="right:-180px;top:-220px;width:720px;height:720px;background:var(--vert-cercle)" aria-hidden="true"></div>

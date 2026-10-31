@@ -105,3 +105,31 @@ def bess_cards():
 def chiffres():
     return '<div class="grid grid-4" style="gap:12px">' + "".join(
         f'<div class="card bg-pale" style="border:0;gap:2px;padding:18px"><strong style="font-size:26px;font-weight:800;color:var(--vert-hover)">{a}</strong><span class="small muted">{b}</span></div>' for a, b in BAT_CHIFFRES) + '</div>'
+
+
+U = "https://images.unsplash.com/"
+PHOTOS = {  # photos d'illustration libres de droits (licence Unsplash)
+    "villa": U + "photo-1775686332316-8e1ce04d10d7",
+    "hotel": U + "photo-1782141269306-95591212afdc",
+    "pompage": U + "photo-1670519808965-16b9b2f724af",
+    "boutique": U + "photo-1753881110611-00755160afd2",
+    "atelier": U + "photo-1780445392528-4895da4b2cb8",
+    "panneaux": U + "photo-1521618755572-156ae0cdd74d",
+    "onduleurs-reseau": U + "photo-1780445392417-68b9dccc45f2",
+    "structures": U + "photo-1509391366360-2e959784a276",
+    "pompes-solaires": U + "photo-1561115867-be8460fbebfe",
+    "protections": U + "photo-1544724569-5f546fd6f2b5",
+}
+
+
+def img_src(x, w=900):
+    if x.startswith("http"):
+        return f"{x}?w={w}&q=75&auto=format&fit=crop"
+    return "assets/img/" + x
+
+
+def is_photo(x):
+    return x.startswith("http") or x == "maison-solaire.jpg"
+
+
+CREDIT = '<p class="tiny muted">Photos d’illustration libres de droits (Unsplash) en attendant les photos de chantiers GSL-ELEC.</p>'

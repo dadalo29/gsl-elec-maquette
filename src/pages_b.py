@@ -1,7 +1,7 @@
 """Équipements, fiches, étapes, réalisations, financement, à propos, conseils, article, FAQ, contact, mentions."""
 from common import ico, ARROW, WA, TEL, TEL_TXT, WA_TXT_AFF, MAIL, cta_band, crumbs
 from data import EQUIP, TINT, FAQ_ALL, equip_card, faq_items, contact_form
-from produits import (bande, battery_cards, bess_cards, onduleur_tiles, forces, spec_table, chiffres, photo,
+from produits import (PHOTOS, img_src, is_photo, CREDIT, bande, battery_cards, bess_cards, onduleur_tiles, forces, spec_table, chiffres, photo,
                       ONDULEUR_FORCES, ONDULEUR_SPECS, BAT_FORCES, BAT_SPECS, SOURCE)
 
 
@@ -51,7 +51,7 @@ def equipements():
 <section class="section bg-gris" id="autres"><div class="container stack-l">
 <div class="stack"><span class="eyebrow">Autres équipements</span><h2 class="h2">Tout le reste de l’installation</h2></div>
 <div class="grid grid-fill">{"".join(equip_card(e) for e in autres)}</div>
-{SOURCE}
+{SOURCE}{CREDIT}
 </div></section>
 {cta_band()}'''
 
@@ -62,7 +62,10 @@ def fiche(e):
     pros = "".join(f'<li>{ico("check", 22, 2.4)}{p}</li>' for p in e["pros"])
     others = "".join(f'<a class="chip" style="display:inline-flex;align-items:center" href="{o["href"]}">{o["title"]}</a>' for o in EQUIP if o["key"] != e["key"])
     if e.get("img"):
-        visual = f'<div style="border-radius:var(--rayon-xl);border:1px solid var(--bord);background:#fff;padding:24px;display:flex;align-items:center;justify-content:center;max-height:520px"><img src="assets/img/{e["img"]}" alt="{e["title"]}" style="max-height:470px;max-width:100%;object-fit:contain"></div>'
+        if is_photo(e["img"]):
+            visual = f'<figure style="margin:0;display:flex;flex-direction:column;gap:8px"><div style="border-radius:var(--rayon-xl);overflow:hidden;aspect-ratio:4/3"><img src="{img_src(e["img"], 1100)}" alt="{e["title"]}" style="width:100%;height:100%;object-fit:cover"></div><figcaption class="tiny muted">Photo d’illustration (Unsplash). Modèle exact précisé dans votre devis.</figcaption></figure>'
+        else:
+            visual = f'<div style="border-radius:var(--rayon-xl);border:1px solid var(--bord);background:#fff;padding:24px;display:flex;align-items:center;justify-content:center;max-height:520px"><img src="{img_src(e["img"])}" alt="{e["title"]}" style="max-height:470px;max-width:100%;object-fit:contain"></div>'
     else:
         visual = f'<div style="aspect-ratio:1/1;max-height:520px;border-radius:var(--rayon-xl);background:{bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative">{ico(e["icon"], 160, 0.9)}<span style="position:absolute;bottom:18px;left:18px;right:18px;text-align:center;background:rgba(255,255,255,.92);color:var(--texte);border-radius:12px;padding:8px 12px;font-size:12.5px;font-weight:600">Photo produit fournie par GSL-ELEC</span></div>'
     pdf = {"onduleurs-hybrides": "GSL-ELEC_Onduleurs_hybrides_8-24kW.pdf", "batteries-lithium": "GSL-ELEC_Batteries_lithium.pdf", "batteries-haute-tension": "GSL-ELEC_Batteries_lithium.pdf"}.get(e["key"])
@@ -140,10 +143,10 @@ def etapes():
 
 
 def realisations():
-    R = [("maison", "Maison", "Villa familiale", "Particulier", "Hybride + lithium", False), ("pro", "Hôtel", "Hôtel en bord de mer", "Hôtellerie", "Batteries HT", True),
-         ("agri", "Agriculture", "Forage maraîcher", "Exploitation", "Pompe immergée", False), ("commerce", "Commerce", "Boutique de quartier", "Commerçant", "Hybride + lithium", False),
-         ("pro", "Industrie", "Atelier de production", "Industrie", "Onduleur triphasé", True), ("maison", "Diaspora", "Maison familiale à distance", "Diaspora", "Hybride + supervision", False)]
-    cards = "".join(f'''<article class="card card-media" data-tags="{f}"><div class="placeholder ratio-43{" orange" if o else ""}">{ico("image", 44, 1.4)}Photo du chantier</div>
+    R = [("maison", "Maison", "Villa familiale", "Particulier", "Hybride + lithium", PHOTOS["villa"]), ("pro", "Hôtel", "Hôtel en bord de mer", "Hôtellerie", "Batteries HT", PHOTOS["hotel"]),
+         ("agri", "Agriculture", "Forage maraîcher", "Exploitation", "Pompe immergée", PHOTOS["pompage"]), ("commerce", "Commerce", "Boutique de quartier", "Commerçant", "Hybride + lithium", PHOTOS["boutique"]),
+         ("pro", "Industrie", "Atelier de production", "Industrie", "Onduleur triphasé", PHOTOS["atelier"]), ("maison", "Diaspora", "Maison familiale à distance", "Diaspora", "Hybride + supervision", "maison-solaire.jpg")]
+    cards = "".join(f'''<article class="card card-media" data-tags="{f}"><div class="ratio-43" style="position:relative;overflow:hidden;background:var(--vert-pale)"><img src="{img_src(o, 800)}" alt="{t} : photo d’illustration" loading="lazy" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;left:10px;bottom:10px;background:rgba(11,46,26,.78);color:#fff;font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:999px">Photo d’illustration</span></div>
 <div class="card-body" style="padding:22px 24px;gap:14px"><span class="badge badge-vert">{c}</span><h2 style="font-size:19px;font-weight:700;letter-spacing:0">{t}</h2>
 <dl class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;margin:0;font-size:13.5px">
 <div><dt class="muted">Lieu</dt><dd class="todo" style="margin:2px 0 0">[Ville]</dd></div><div><dt class="muted">Client</dt><dd style="margin:2px 0 0;font-weight:600">{cl}</dd></div>
@@ -153,7 +156,7 @@ def realisations():
     return hero_pale("Réalisations", 'Nos installations <span class="accent-vert">au Sénégal</span>',
                      "Maisons, commerces, hôtels, exploitations agricoles : découvrez nos chantiers, avec pour chacun le lieu, le type de client, la puissance installée et le matériel utilisé.",
                      '<p class="tiny" style="background:var(--creme);border-radius:12px;padding:10px 14px;align-self:flex-start;color:#4A3F2A">Page prête, masquée au lancement : elle sera publiée dès les premiers chantiers photographiés.</p>') + f'''
-<section class="section-tight"><div class="container stack-l">{chips("real-grid", cats, "réalisation")}<div class="grid grid-3" id="real-grid">{cards}</div></div></section>
+<section class="section-tight"><div class="container stack-l">{chips("real-grid", cats, "réalisation")}<div class="grid grid-3" id="real-grid">{cards}</div>{CREDIT}</div></section>
 <section class="section bg-gris"><div class="container stack-l">
 <div class="section-head"><div><span class="eyebrow">Avis clients</span><h2 class="h2">Ils nous ont fait confiance</h2></div><a class="link-arrow" href="#">Voir les avis sur Google{ico("arrow", 16, 2.2)}</a></div>
 <div class="grid grid-3">{quote * 3}</div>

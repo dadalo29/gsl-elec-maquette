@@ -1,11 +1,12 @@
 """Données du site : équipements, services, FAQ, et composants qui les affichent."""
 from html import escape
 from common import ico, ARROW, WA
+from produits import PHOTOS, img_src, is_photo
 
 TINT = {"g": ("var(--vert-pale)", "var(--vert-cta)"), "o": ("var(--creme-2)", "var(--orange-texte)"), "d": ("var(--vert-fonce)", "var(--orange-clair)")}
 
 EQUIP = [
-    dict(key="panneaux", icon="panel", t="o", title="Panneaux solaires", who="tous les clients", tags="maison commerce pro agri",
+    dict(key="panneaux", img=PHOTOS["panneaux"], icon="panel", t="o", title="Panneaux solaires", who="tous les clients", tags="maison commerce pro agri",
          desc="Monocristallins haut rendement : ils transforment la lumière du soleil en électricité. Résistants à la chaleur et à la poussière.",
          long="Des panneaux monocristallins haut rendement qui transforment la lumière du soleil en électricité. Conçus pour résister à la chaleur et à la poussière, ils offrent une longue durée de vie.",
          uses=["Toitures", "Au sol", "Ombrières de parking"], pros=["Haut rendement, même par forte chaleur", "Résistants à la poussière et aux intempéries", "Longue durée de production"], range="Plusieurs puissances par panneau"),
@@ -13,7 +14,7 @@ EQUIP = [
          desc="Le cerveau de l’installation : solaire d’abord, charge des batteries, bascule automatique sur le réseau ou le groupe.",
          long="Le « cerveau » de l’installation : il utilise d’abord l’énergie solaire, charge les batteries et bascule automatiquement sur le réseau ou le groupe électrogène en cas de besoin.",
          uses=["Maison avec batteries", "Commerce", "Entreprise"], pros=["Priorité au solaire, économies maximales", "Bascule automatique sans coupure ressentie", "Suivi depuis le téléphone"], range="Monophasés et triphasés"),
-    dict(key="onduleurs-reseau", icon="inverter", t="g", title="Onduleurs réseau", who="bureaux et commerces actifs le jour", tags="commerce pro",
+    dict(key="onduleurs-reseau", img=PHOTOS["onduleurs-reseau"], icon="inverter", t="g", title="Onduleurs réseau", who="bureaux et commerces actifs le jour", tags="commerce pro",
          desc="Ils injectent la production solaire directement dans votre installation, sans batterie. La solution la plus économique en journée.",
          long="Ils injectent la production solaire directement dans votre installation pour consommer moins sur le réseau, sans batterie. C’est la solution la plus économique pour réduire la facture en journée.",
          uses=["Bureaux", "Commerces ouverts le jour", "Ateliers"], pros=["Investissement réduit, sans batterie", "Économies immédiates en journée", "Installation simple"], range="Monophasés et triphasés"),
@@ -25,15 +26,15 @@ EQUIP = [
          desc="Armoires de 64 à 209 kWh, onduleur, BMS et extinction incendie intégrés, pour hôtels et industries.",
          long="Des modules lithium LiFePO4 empilés et reliés en série pour fonctionner à plusieurs centaines de volts, associés à un onduleur hybride triphasé haute tension. Le stockage de grande capacité des gros consommateurs.",
          uses=["Hôtels", "Industries", "Chambres froides"], pros=["Grande capacité, extensible", "Meilleur rendement, moins de pertes", "Supervision et protection de chaque cellule"], range="Dimensionné sur mesure après étude"),
-    dict(key="pompes-solaires", icon="drop", t="g", title="Pompes solaires", who="agriculteurs, éleveurs, forages", tags="agri",
+    dict(key="pompes-solaires", img=PHOTOS["pompes-solaires"], icon="drop", t="g", title="Pompes solaires", who="agriculteurs, éleveurs, forages", tags="agri",
          desc="Immergées ou de surface, alimentées par les panneaux, avec un contrôleur qui adapte le débit à l’ensoleillement.",
          long="Des pompes immergées ou de surface alimentées directement par les panneaux, avec un contrôleur qui adapte le débit à l’ensoleillement. Pas de gasoil, pas de réseau.",
          uses=["Forages", "Irrigation", "Abreuvement"], pros=["Zéro carburant", "Fonctionne loin du réseau", "Peu d’entretien"], range="Immergées et de surface"),
-    dict(key="structures", icon="bracket", t="g", title="Structures de fixation", who="tous les clients", tags="maison commerce pro agri",
+    dict(key="structures", img=PHOTOS["structures"], icon="bracket", t="g", title="Structures de fixation", who="tous les clients", tags="maison commerce pro agri",
          desc="Aluminium ou acier galvanisé pour toits, sols et ombrières de parking, résistants à la corrosion et au vent.",
          long="Des supports en aluminium ou en acier galvanisé pour toits, sols et ombrières de parking, résistants à la corrosion et au vent.",
          uses=["Toits", "Sols", "Ombrières"], pros=["Résistance à la corrosion", "Tenue au vent", "Orientation optimisée des panneaux"], range="Aluminium et acier galvanisé"),
-    dict(key="protections", icon="shieldbolt", t="g", title="Protections électriques", who="tous les clients", tags="maison commerce pro agri",
+    dict(key="protections", img=PHOTOS["protections"], icon="shieldbolt", t="g", title="Protections électriques", who="tous les clients", tags="maison commerce pro agri",
          desc="Coffrets AC/DC, disjoncteurs, parafoudres et mise à la terre : protègent l’installation, les appareils et les personnes.",
          long="Coffrets AC/DC, disjoncteurs, parafoudres et mise à la terre : ils protègent l’installation, les appareils et les personnes.",
          uses=["Coffrets AC/DC", "Parafoudres", "Mise à la terre"], pros=["Sécurité des personnes", "Protection des appareils", "Installation durable"], range="Adaptées à chaque installation"),
@@ -55,7 +56,7 @@ def equip_card(e, small=False):
     star = '<span class="badge" style="position:absolute;top:12px;left:12px;background:var(--encre);color:var(--orange-clair)">Offre phare</span>' if e.get("star") else ""
     h = (150 if small else 180) if e.get("img") else (120 if small else 150)
     return f'''<a class="card card-media" href="{e["href"]}" data-tags="{e["tags"]}">
-<div style="height:{h}px;background:{"#fff" if e.get("img") else bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative;{"border-bottom:1px solid var(--bord);padding:10px" if e.get("img") else ""}">{f'<img src="assets/img/{e["img"]}" alt="" loading="lazy" style="max-height:100%;max-width:100%;object-fit:contain">' if e.get("img") else ico(e["icon"], 56 if small else 64, 1.3)}{star}</div>
+<div style="height:{h}px;background:{"#fff" if e.get("img") else bg};color:{ink};display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;{"border-bottom:1px solid var(--bord);padding:10px" if e.get("img") and not is_photo(e["img"]) else ""}">{(f'<img src="{img_src(e["img"], 700)}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">' if is_photo(e["img"]) else f'<img src="{img_src(e["img"])}" alt="" loading="lazy" style="max-height:100%;max-width:100%;object-fit:contain">') if e.get("img") else ico(e["icon"], 56 if small else 64, 1.3)}{star}</div>
 <div class="card-body"><h3 style="font-size:17px;font-weight:700;letter-spacing:0">{e["title"]}</h3><p style="font-size:14px">{e["desc"]}</p>
 <span class="small muted"><strong style="color:var(--encre)">Pour :</strong> {e["who"]}</span>
 <span class="more" style="font-size:14.5px">Voir la fiche{ico("arrow", 15, 2.2)}</span></div></a>'''
