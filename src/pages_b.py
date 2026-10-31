@@ -394,7 +394,7 @@ def mentions():
 <section class="page-hero bg-gris" style="border-top:0"><div class="container">
 {crumbs(("Mentions légales et confidentialité", None))}
 <h1 class="h1" style="font-size:clamp(30px,4vw,52px)">Mentions légales et politique de confidentialité</h1>
-<span class="small muted">Dernière mise à jour : {T("[date de mise en ligne]")}</span>
+<span class="small muted">Dernière mise à jour : 31 octobre 2026</span>
 </div></section>
 <section class="section-tight"><div class="container row legal" style="align-items:flex-start">
 <nav class="toc" aria-label="Sommaire" style="flex:1 1 240px;max-width:300px"><strong class="small muted" style="letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Sommaire</strong>
@@ -403,7 +403,7 @@ def mentions():
 <div id="editeur" class="stack" style="gap:12px"><h2 style="margin:0">1. Éditeur du site</h2><dl>
 <dt>Raison sociale</dt><dd>GSL-ELEC — Gestion Solaire Locale et Électricité</dd><dt>Forme juridique</dt><dd>{T("[À compléter]")}</dd><dt>NINEA</dt><dd>{T("[À compléter]")}</dd><dt>RCCM</dt><dd>{T("[À compléter]")}</dd>
 <dt>Siège social</dt><dd>{T("[Adresse au Sénégal]")}</dd><dt>Directeur de la publication</dt><dd>Bathie SARR</dd><dt>Contact</dt><dd>{MAIL} · {TEL_TXT}</dd></dl></div>
-<div id="hebergement" class="stack" style="gap:12px"><h2 style="margin:0">2. Hébergement</h2><p>Le site est hébergé par {T("[nom de l’hébergeur, adresse, téléphone]")}.</p></div>
+<div id="hebergement" class="stack" style="gap:12px"><h2 style="margin:0">2. Hébergement</h2><p>Le site est hébergé par LWS (Ligne Web Services), 10 rue Penthièvre, 75008 Paris, France — <a href="https://www.lws.fr">www.lws.fr</a>.</p></div>
 <div id="propriete" class="stack" style="gap:12px"><h2 style="margin:0">3. Propriété intellectuelle</h2><p>Le logo, les textes, les visuels et l’ensemble des contenus de ce site sont la propriété de GSL-ELEC ou utilisés avec autorisation. Toute reproduction sans accord écrit préalable est interdite.</p></div>
 <div id="confidentialite" class="stack" style="gap:12px"><h2 style="margin:0">4. Données personnelles</h2>
 <p>Lorsque vous remplissez un formulaire, nous recueillons les informations nécessaires pour traiter votre demande : nom, téléphone, e-mail (facultatif), ville, type de client, service souhaité, montant de facture, message et, si vous le souhaitez, une photo de votre facture.</p>

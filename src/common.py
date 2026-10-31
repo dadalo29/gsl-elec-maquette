@@ -1,5 +1,10 @@
 """Éléments communs du site GSL-ELEC : icônes, en-tête, pied de page, gabarit."""
 from html import escape
+import os
+
+# Version en ligne : GSL_DOMAIN=gsl-elec.fr python3 build.py …  (vide = démo GitHub, non indexée)
+DOMAIN = os.environ.get("GSL_DOMAIN", "").strip()
+BASE = f"https://{DOMAIN}/" if DOMAIN else ""
 
 WA_NUM = "33768026171"
 WA_TXT = "Bonjour%2C%20je%20souhaite%20un%20devis%20solaire"
@@ -7,7 +12,7 @@ WA = f"https://wa.me/{WA_NUM}?text={WA_TXT}"
 TEL = "tel:+221777019883"
 TEL_TXT = "+221 77 701 98 83"
 WA_TXT_AFF = "+33 7 68 02 61 71"
-MAIL = "contact@gsl-elec.sn"
+MAIL = "contact@gsl-elec.fr"
 
 P = {
     "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
@@ -158,6 +163,17 @@ def crumbs(*items):
     return "".join(out)
 
 
+def seo(fn):
+    if not BASE:
+        return '<meta property="og:image" content="assets/img/hero-famille.jpg">\n<meta name="robots" content="noindex, nofollow">'
+    url = BASE + ("" if fn == "index.html" else fn)
+    return f'<link rel="canonical" href="{url}">\n<meta property="og:url" content="{url}">\n<meta property="og:image" content="{BASE}assets/img/hero-famille-maison.jpg">'
+
+
+def wa_attr():
+    return f' data-wa="{WA_NUM}"' if BASE else ""
+
+
 def page(title, desc, active, body, canonical):
     return f'''<!doctype html>
 <html lang="fr">
@@ -171,15 +187,14 @@ def page(title, desc, active, body, canonical):
 <meta property="og:description" content="{escape(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_SN">
-<meta property="og:image" content="assets/img/hero-famille.jpg">
-<meta name="robots" content="noindex, nofollow">
+{seo(canonical)}
 <link rel="icon" type="image/png" href="assets/img/gsl-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body{wa_attr()}>
 {header(active)}
 <main id="contenu">
 {body}

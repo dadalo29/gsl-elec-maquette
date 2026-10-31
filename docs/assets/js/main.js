@@ -127,6 +127,26 @@
         if (bad && ok) { field.focus(); ok = false; }
       });
       if (!ok) return;
+      var wa = document.body.getAttribute('data-wa');
+      if (wa) {
+        /* Version en ligne : la demande est envoyée sur le WhatsApp de GSL-ELEC, déjà rédigée */
+        var lines = ['Bonjour GSL-ELEC, voici ma demande (' + (form.getAttribute('aria-label') || 'devis') + ') :'];
+        form.querySelectorAll('input, select, textarea').forEach(function (f) {
+          if (f.type === 'checkbox' || f.type === 'file' || f.type === 'hidden') return;
+          if (f.type === 'radio' && !f.checked) return;
+          var v = f.tagName === 'SELECT' ? f.options[f.selectedIndex].text : f.value.trim();
+          if (!v) return;
+          var lab = f.id && form.querySelector('label[for="' + f.id + '"]');
+          var name = lab ? lab.textContent.replace(/\*|\(facultatif\)/g, '').trim() : (f.name || '');
+          lines.push('- ' + name + ' : ' + v);
+        });
+        var file = form.querySelector('input[type=file]');
+        if (file && file.files.length) lines.push('(Je vous envoie la photo de ma facture juste après.)');
+        window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+        var st = form.querySelector('.success strong'), sp = form.querySelector('.success p');
+        if (st) st.textContent = 'Votre demande est prête dans WhatsApp';
+        if (sp) sp.textContent = 'Appuyez sur « Envoyer » dans WhatsApp pour nous la transmettre. WhatsApp ne s’est pas ouvert ? Écrivez-nous ou appelez le ' + '+221 77 701 98 83.';
+      }
       form.classList.add('sent');
       var s = form.querySelector('.success');
       if (s) { s.setAttribute('tabindex', '-1'); s.focus(); }

@@ -5,7 +5,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from common import page, SERVICES  # noqa: E402
+from common import page, SERVICES, BASE  # noqa: E402
 from data import EQUIP, SERVICE_DATA  # noqa: E402
 import pages_a as A  # noqa: E402
 import pages_b as B  # noqa: E402
@@ -47,5 +47,24 @@ for fn, title, desc, active, body in pages:
     (OUT / fn).write_text(page(title, desc, active, body, fn), encoding="utf-8")
 
 (OUT / ".nojekyll").write_text("")
-(OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n")
+if BASE:
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {BASE}sitemap.xml\n")
+    urls = "".join(f"<url><loc>{BASE}{'' if fn == 'index.html' else fn}</loc></url>" for fn, *_ in pages)
+    (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n', encoding="utf-8")
+    (OUT / ".htaccess").write_text("""# Redirection vers HTTPS (à activer une fois le certificat SSL en place)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+ErrorDocument 404 /index.html
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpeg "access plus 1 month"
+ExpiresByType image/png "access plus 1 month"
+ExpiresByType text/css "access plus 1 week"
+ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+""")
+    (OUT / ".nojekyll").unlink()
+else:
+    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n")
 print(f"{len(pages)} pages générées dans {OUT}")
