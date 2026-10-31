@@ -119,6 +119,8 @@ PHOTOS = {  # photos d'illustration libres de droits (licence Unsplash)
     "structures": U + "photo-1509391366360-2e959784a276",
     "pompes-solaires": U + "photo-1561115867-be8460fbebfe",
     "protections": U + "photo-1544724569-5f546fd6f2b5",
+    "supervision": U + "photo-1622782914767-404fb9ab3f57",
+    "appareils": U + "photo-1718203862467-c33159fdc504",
 }
 
 
